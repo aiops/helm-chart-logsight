@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-config
+data:
+  RESULT_API_HOST: logsight-result-api
+  RESULT_API_PORT: "5554"
+  KIBANA_SCHEME: http
+  LOGSIGHT_DEPLOYMENT_BACKEND: stand-alone
+  LOGSIGHT_BACKEND_PORT: "8080"
+  APP_RPC_ZMQ_HOST: logsight
+  APP_RPC_ZMQ_PORT: "5555"
+  APP_RPC_ZMQ_TIMEOUT: "30000"
+  LOGS_STREAM_ZMQ_PORT: "5559"
+  LOGS_CTRL_RPC_IN_ZMQ_PORT: "5558"
+  LOGS_CTRL_RPC_OUT_ZMQ_PORT: "5557"

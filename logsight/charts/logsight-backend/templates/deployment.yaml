@@ -1,0 +1,142 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "logsight-backend.fullname" . }}
+  labels:
+    {{- include "logsight-backend.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "logsight-backend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "logsight-backend.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "logsight-backend.serviceAccountName" . }}
+      enableServiceLinks: false
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: service-secrets
+            - configMapRef:
+               name: {{ .Chart.Name }}-config
+            - secretRef:
+                name: {{ .Chart.Name }}-secrets
+          env:
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:postgresql://${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}" 
+          - name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: service-secrets
+                key: POSTGRES_USERNAME
+
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: service-secrets
+                key: POSTGRES_PASSWORD  
+          - name: POSTGRES_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: POSTGRES_HOSTNAME
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: POSTGRES_DB
+          - name: POSTGRES_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: POSTGRES_PORT
+
+          - name: KIBANA_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: KIBANA_HOST
+
+          - name: KIBANA_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: KIBANA_PORT
+          - name: ACCEPT_LOGSIGHT_LICENSE
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: ACCEPT_LOGSIGHT_LICENSE
+          - name: ELASTICSEARCH_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: ELASTICSEARCH_PORT
+          - name: ELASTICSEARCH_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: ELASTICSEARCH_HOST
+          ports:
+            - name: api-port
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+              
+            - name: app-ctrl-in
+              containerPort: {{ .Values.ports.zmqControlIn }}
+              protocol: TCP
+
+            - name: app-ctrl-out
+              containerPort: {{ .Values.ports.zmqControlOut }}
+              protocol: TCP
+              
+            - name: app-steam-in
+              containerPort: {{ .Values.ports.zmqStreamIn }}
+              protocol: TCP
+              
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

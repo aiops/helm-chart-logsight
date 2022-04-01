@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-config
+data:
+  APP_RPC_ZMQ_ENDPOINT: {{ (printf "tcp://*:%v" .Values.service.port) | quote }} 
+  LOGS_CTRL_RPC_OUT_ZMQ_ENDPOINT: {{ printf "tcp://%s:%v" .Values.backendHostname .Values.ports.zmqControlOut | quote }}
+  LOGS_CTRL_RPC_IN_ZMQ_ENDPOINT: {{ printf "tcp://%s:%v" .Values.backendHostname .Values.ports.zmqControlIn | quote }}
+  LOGS_STREAM_ZMQ_ENDPOINT: {{ printf "tcp://%s:%v" .Values.backendHostname .Values.ports.zmqStreamIn | quote }}

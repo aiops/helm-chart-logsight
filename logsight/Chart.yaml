@@ -1,0 +1,42 @@
+
+apiVersion: v2
+name: logsight
+description: Logsight infuses deep learning and AI-powered analytics to enable continuous software delivery and proactive troubleshooting.
+type: application
+
+version: 0.1.0
+appVersion: "v1.0.0"
+keywords:
+  - logs
+  - analytics
+
+home: https://logsight.ai
+icon: https://logsight.ai/assets/img/logo-logsight.svg
+
+maintainers:
+  - name: petar-ilijevski-logsight
+    email: petar.ilijevski@logsight.ai
+
+dependencies:
+- name: postgresql
+  version: 11.1.12
+  repository: https://charts.bitnami.com/bitnami
+- name: elasticsearch
+  version: 7.16.2
+  repository: https://helm.elastic.co
+  condition: elasticsearch.enabled
+- name: kibana
+  version: 7.16.2
+  repository: https://helm.elastic.co
+- name: logsight-backend
+  version: 0.1.0
+  repository: file://./charts/logsight-backend
+- name: logsight
+  version: 0.1.0
+  repository: file://./charts/logsight-core
+- name: logsight-frontend
+  version: 0.1.0
+  repository: file://./charts/logsight-frontend
+- name: logsight-result-api
+  version: 0.1.0
+  repository: file://./charts/logsight-result-api

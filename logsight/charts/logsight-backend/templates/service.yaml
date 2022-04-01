@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "logsight-backend.fullname" . }}
+  labels:
+    {{- include "logsight-backend.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP
+      name: api-entrypoint
+    - port: {{ .Values.ports.zmqControlIn }}
+      targetPort: {{ .Values.ports.zmqControlIn }}
+      protocol: TCP
+      name: app-ctrl-in
+    - port: {{ .Values.ports.zmqControlOut }}
+      targetPort: {{ .Values.ports.zmqControlOut }}
+      protocol: TCP
+      name: app-ctrl-out
+    - port: {{ .Values.ports.zmqStreamIn }}
+      targetPort: {{ .Values.ports.zmqStreamIn }}
+      protocol: TCP
+      name: app-steam-in
+  selector:
+    {{- include "logsight-backend.selectorLabels" . | nindent 4 }}

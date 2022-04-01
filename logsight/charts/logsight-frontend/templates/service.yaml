@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "logsight-frontend.fullname" . }}
+  labels:
+    {{- include "logsight-frontend.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 4200
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "logsight-frontend.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-config
+data:
+  POSTGRES_HOSTNAME: postgresql
+  POSTGRES_DB: {{ .Values.global.postgresql.auth.database | quote }}
+  POSTGRES_PORT: {{ .Values.global.postgresql.service.port | quote }}
+  ELASTICSEARCH_HOST: {{ .Values.logsight.elasticsearch.hostname | quote }}
+  ELASTICSEARCH_PORT: {{ .Values.logsight.elasticsearch.port | quote }}
+  KIBANA_HOST: {{ .Values.logsight.kibana.hostname | quote }}
+  KIBANA_PORT: {{ .Values.logsight.kibana.port | quote }}
+  ACCEPT_LOGSIGHT_LICENSE: accept-license
+

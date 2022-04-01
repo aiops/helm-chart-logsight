@@ -1,0 +1,141 @@
+logsight:
+  elasticsearch:
+    username: elastic
+    password: elasticsearchpassword
+    hostname: elasticsearch-master
+    port: 9200
+  kibana:
+    hostname: logsight-kibana
+    port: 5601
+
+## Configuration values for postgresql dependency
+## ref: https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md
+postgresql:
+  # Enable to deploy the bitnami PostgreSQL chart
+  enabled: true
+  ## postgresql Chart global settings
+  # global:
+  #   imageRegistry: ''
+  #   imagePullSecrets: ''
+  ## bitnami/postgres image tag
+  # image:
+  #   tag: 11.7.0-debian-10-r9
+  # existingSecret Name of existing secret to use for PostgreSQL passwords
+  # The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is
+  # different of postgres, postgresql-postgres-password which will override postgresqlPassword,
+  # postgresql-replication-password which will override replication.password and postgresql-ldap-password which will be
+  # used to authenticate on LDAP. The value is evaluated as a template.
+  # existingSecret: ""
+  #
+  nameOverride: "postgresql"
+  fullnameOverride: "postgresql"
+
+  persistence:
+    enabled: true
+    size: 2Gi
+  image:
+    tag: 11
+
+global:
+  postgresql:
+    auth:
+      username: logsight
+      password: logsight
+      database: logsight
+    service:
+      port: 5432
+
+
+
+
+elasticsearch:
+
+  enabled: true
+  # we only use a single-node cluster for our deployment
+  singleNode: true
+  # Permit co-located instances for solitary minikube virtual machines.
+  antiAffinity: "soft"
+
+  # Shrink default JVM heap.
+  esJavaOpts: "-Xmx512m -Xms512m"
+
+  esConfig:
+    elasticsearch.yml: |
+      xpack.security.enabled: true
+      xpack.security.transport.ssl.enabled: true
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      xpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+
+  extraEnvs:
+    - name: ELASTIC_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: password
+    - name: ELASTIC_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: username
+
+  secretMounts:
+    - name: elastic-certificates
+      secretName: elastic-certificates
+      path: /usr/share/elasticsearch/config/certs
+
+  replicas: 1
+  clusterHealthCheckParams: 'wait_for_status=yellow&timeout=1s'
+
+
+  # Allocate smaller chunks of memory per pod.
+  # resources:
+  #   requests:
+  #     cpu: "100m"
+  #     memory: "1G"
+  #   limits:
+  #     cpu: "1000m"
+  #     memory: "1G"
+
+  # Request smaller persistent volumes.
+  # volumeClaimTemplate:
+  #   accessModes: [ "ReadWriteOnce" ]
+  #   storageClassName: "standard"
+  #   resources:
+  #     requests:
+  #       storage: 8G
+
+kibana:
+  enable: true
+  extraEnvs:
+    - name: 'ELASTICSEARCH_USERNAME'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: username
+    - name: 'ELASTICSEARCH_PASSWORD'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: password
+    - name: 'KIBANA_ENCRYPTION_KEY'
+      valueFrom:
+        secretKeyRef:
+          name: kibana
+          key: encryptionkey
+
+  # kibanaConfig:
+  #   kibana.yml: |
+  #     server.ssl:
+  #       enabled: true
+  #       key: /usr/share/kibana/config/certs/elastic-certificate.pem
+  #       certificate: /usr/share/kibana/config/certs/elastic-certificate.pem
+  #     xpack.security.encryptionKey: ${KIBANA_ENCRYPTION_KEY}
+  #     elasticsearch.ssl:
+  #       certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem
+  #       verificationMode: certificate
+
+  secretMounts:
+    - name: elastic-certificate-pem
+      secretName: elastic-certificate-pem
+      path: /usr/share/kibana/config/certs

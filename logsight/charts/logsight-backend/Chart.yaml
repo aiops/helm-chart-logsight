@@ -1,0 +1,18 @@
+apiVersion: v2
+name: logsight-backend
+description: Logsight infuses deep learning and AI-powered analytics to enable continuous software delivery and proactive troubleshooting.
+type: application
+
+version: 0.1.0
+appVersion: "v1.0.0"
+keywords:
+  - logs
+  - analytics
+
+home: https://logsight.ai
+icon: https://logsight.ai/assets/img/logo-logsight.svg
+
+maintainers:
+  - name: petar-ilijevski-logsight
+    email: petar.ilijevski@logsight.ai
+
