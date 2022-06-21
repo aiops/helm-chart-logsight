@@ -10,18 +10,6 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
       protocol: TCP
-      name: mngr-entrypoint
-    - port: {{ .Values.ports.zmqControlIn }}
-      targetPort: {{ .Values.ports.zmqControlIn }}
-      protocol: TCP
-      name: app-ctrl-in
-    - port: {{ .Values.ports.zmqControlOut }}
-      targetPort: {{ .Values.ports.zmqControlOut }}
-      protocol: TCP
-      name: app-ctrl-out
-    - port: {{ .Values.ports.zmqStreamIn }}
-      targetPort: {{ .Values.ports.zmqStreamIn }}
-      protocol: TCP
-      name: app-steam-in
+      name: log-stream
   selector:
     {{- include "logsight.selectorLabels" . | nindent 4 }}

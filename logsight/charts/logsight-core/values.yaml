@@ -40,12 +40,12 @@ securityContext: {}
 backendHostname: logsight-backend
 service:
   type: ClusterIP
-  port: 5555
+  port: 5559
 
 ports:
-  zmqControlIn: 5557
-  zmqControlOut: 5558
-  zmqStreamIn: 5559
+  zmqLogStream: 5559
+
+filterNormal: false
 
 ingress:
   enabled: false
@@ -62,6 +62,32 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+extraEnvs:
+  - name: DEBUG
+    value: false
+  - name: PIPELINE_INDEX_EXT
+    value: pipeline
+  - name: RETRY_ATTEMPTS
+    value: 6
+  - name: RETRY_TIMEOUT
+    value: 10
+  - name: INCIDENT_JOBS
+    value: true
+  - name: DELETE_ES_JOB
+    value: false
+  - name: PARALLEL_JOBS
+    value: 2
+  - name: JOB_INTERVAL
+    value: 60
+  - name: ES_PIPELINE_ID_INGEST_TIMESTAMP
+    value: ingest_timestamp
+  - name: ES_CLEANUP_AGE
+    value: now-1y
+  - name: ES_CLEANUP_JOB_INTERVAL
+    value: 3600
+  - name: FILTER_NORMAL
+    value: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

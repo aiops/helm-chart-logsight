@@ -97,7 +97,7 @@ Logsight uses Elasticsearch for storing the results of the analyzed logs. It use
 
 ### Postgres
 
-This helm chart uses Posgres database for storage. Below are the configurable params for the database. For more information about configurable parameters pleaser refer to the [README](https://github.com/bitnami/charts/tree/master/bitnami/postgresql) of the chart.
+This helm chart uses Postgres database for storage. Below are the configurable params for the database. For more information about configurable parameters pleaser refer to the [README](https://github.com/bitnami/charts/tree/master/bitnami/postgresql) of the chart.
 
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |

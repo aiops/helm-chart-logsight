@@ -97,21 +97,18 @@ spec:
               configMapKeyRef:
                 name: service-config
                 key: ELASTICSEARCH_HOST
+          - name: LOG_SINK_CONNECTION
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: LOG_SINK_CONNECTION
           ports:
             - name: api-port
               containerPort: {{ .Values.service.port }}
               protocol: TCP
               
-            - name: app-ctrl-in
-              containerPort: {{ .Values.ports.zmqControlIn }}
-              protocol: TCP
-
-            - name: app-ctrl-out
-              containerPort: {{ .Values.ports.zmqControlOut }}
-              protocol: TCP
-              
-            - name: app-steam-in
-              containerPort: {{ .Values.ports.zmqStreamIn }}
+            - name: log-stream
+              containerPort: {{ .Values.ports.zmqLogStream }}
               protocol: TCP
               
           # livenessProbe:

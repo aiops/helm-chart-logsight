@@ -3,8 +3,8 @@ name: logsight-backend
 description: Logsight infuses deep learning and AI-powered analytics to enable continuous software delivery and proactive troubleshooting.
 type: application
 
-version: 0.1.0
-appVersion: "v1.0.0"
+version: 0.1.1
+appVersion: "v1.2.1"
 keywords:
   - logs
   - analytics

@@ -9,16 +9,16 @@ dependencies:
   repository: https://helm.elastic.co
   version: 7.16.2
 - name: logsight-backend
-  repository: file://helm-chart-logsight/charts/logsight-backend
-  version: 0.1.0
+  repository: file://./charts/logsight-backend
+  version: 0.1.1
 - name: logsight
-  repository: file://helm-chart-logsight/charts/logsight-core
-  version: 0.1.0
+  repository: file://./charts/logsight-core
+  version: 0.1.1
 - name: logsight-frontend
-  repository: file://helm-chart-logsight/charts/logsight-frontend
-  version: 0.1.0
+  repository: file://./charts/logsight-frontend
+  version: 0.1.1
 - name: logsight-result-api
-  repository: file://helm-chart-logsight/charts/logsight-result-api
-  version: 0.1.0
-digest: sha256:551fd5c722305448422047508611f34fad3e526f6850aa76df1209ddf9f4f052
-generated: "2022-03-31T15:59:19.659444+02:00"
+  repository: file://./charts/logsight-result-api
+  version: 0.1.1
+digest: sha256:e302782d9e2fdaf76fdb2f7cce881eb0af54b8445f1d61a1b8d796d808a11550
+generated: "2022-06-20T11:34:06.029708+02:00"

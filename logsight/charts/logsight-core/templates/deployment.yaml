@@ -33,6 +33,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- range .Values.extraEnvs }}
+            - name: {{ .name | quote }}
+              value: {{ .value | quote }}
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: service-config
@@ -43,19 +48,19 @@ spec:
             - secretRef:
                 name: {{ .Chart.Name }}-secrets
           ports:
-            - name: http
+            - name: log-stream
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          readinessProbe:
-            tcpSocket:
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: 15
-            periodSeconds: 20
+{{/*          readinessProbe:*/}}
+{{/*            tcpSocket:*/}}
+{{/*              port: {{ .Values.service.port }}*/}}
+{{/*            initialDelaySeconds: 5*/}}
+{{/*            periodSeconds: 10*/}}
+{{/*          livenessProbe:*/}}
+{{/*            tcpSocket:*/}}
+{{/*              port: {{ .Values.service.port }}*/}}
+{{/*            initialDelaySeconds: 15*/}}
+{{/*            periodSeconds: 20*/}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

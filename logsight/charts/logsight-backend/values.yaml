@@ -41,9 +41,7 @@ service:
   port: 8080
   
 ports:
-  zmqControlIn: 5557
-  zmqControlOut: 5558
-  zmqStreamIn: 5559
+  zmqLogStream: 5559
 
 ingress:
   enabled: false
@@ -61,6 +59,9 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+logsight:
+  backend:
+    connectionType: queued-zmq
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -78,7 +79,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 

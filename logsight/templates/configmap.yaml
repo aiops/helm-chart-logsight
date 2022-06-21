@@ -11,4 +11,4 @@ data:
   KIBANA_HOST: {{ .Values.logsight.kibana.hostname | quote }}
   KIBANA_PORT: {{ .Values.logsight.kibana.port | quote }}
   ACCEPT_LOGSIGHT_LICENSE: accept-license
-
+  LOG_SINK_CONNECTION: {{ .Values.logsight.backend.connectionType | quote }}

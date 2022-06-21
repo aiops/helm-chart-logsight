@@ -11,17 +11,9 @@ spec:
       targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: api-entrypoint
-    - port: {{ .Values.ports.zmqControlIn }}
-      targetPort: {{ .Values.ports.zmqControlIn }}
+    - port: {{ .Values.ports.zmqLogStream }}
+      targetPort: {{ .Values.ports.zmqLogStream }}
       protocol: TCP
-      name: app-ctrl-in
-    - port: {{ .Values.ports.zmqControlOut }}
-      targetPort: {{ .Values.ports.zmqControlOut }}
-      protocol: TCP
-      name: app-ctrl-out
-    - port: {{ .Values.ports.zmqStreamIn }}
-      targetPort: {{ .Values.ports.zmqStreamIn }}
-      protocol: TCP
-      name: app-steam-in
+      name: log-steam
   selector:
     {{- include "logsight-backend.selectorLabels" . | nindent 4 }}

@@ -14,3 +14,4 @@ data:
   LOGS_STREAM_ZMQ_PORT: "5559"
   LOGS_CTRL_RPC_IN_ZMQ_PORT: "5558"
   LOGS_CTRL_RPC_OUT_ZMQ_PORT: "5557"
+  LOG_SINK_CONNECTION: {{ .Values.logsight.backend.connectionType | quote }}
