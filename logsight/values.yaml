@@ -8,26 +8,14 @@ logsight:
     hostname: logsight-kibana
     port: 5601
   backend:
-    connectionType: queued-zmq
+    connectionType: kafka
+
 ## Configuration values for postgresql dependency
 ## ref: https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md
 postgresql:
   # Enable to deploy the bitnami PostgreSQL chart
   enabled: true
-  ## postgresql Chart global settings
-  # global:
-  #   imageRegistry: ''
-  #   imagePullSecrets: ''
-  ## bitnami/postgres image tag
-  # image:
-  #   tag: 11.7.0-debian-10-r9
-  # existingSecret Name of existing secret to use for PostgreSQL passwords
-  # The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is
-  # different of postgres, postgresql-postgres-password which will override postgresqlPassword,
-  # postgresql-replication-password which will override replication.password and postgresql-ldap-password which will be
-  # used to authenticate on LDAP. The value is evaluated as a template.
-  # existingSecret: ""
-  #
+
   nameOverride: "postgresql"
   fullnameOverride: "postgresql"
 
@@ -37,12 +25,20 @@ postgresql:
   image:
     tag: 11
 
+kafka:
+  enabled: true
+  nameOverride: "kafka"
+  fullnameOverride: "kafka"
+  maxMessageBytes: _5242880
+  zookeeper:
+    enabled: true
+
 global:
   postgresql:
     auth:
-      username: logsight
-      password: logsight
-      database: logsight
+      username: logsight-test
+      password: logsight-test
+      database: test-logsight
     service:
       port: 5432
 

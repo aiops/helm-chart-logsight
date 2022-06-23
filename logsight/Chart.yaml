@@ -18,6 +18,10 @@ maintainers:
     email: petar.ilijevski@logsight.ai
 
 dependencies:
+- name: kafka
+  version: 16.x.x
+  repository: https://charts.bitnami.com/bitnami
+  condition: kafka.enabled
 - name: postgresql
   version: 11.1.12
   repository: https://charts.bitnami.com/bitnami

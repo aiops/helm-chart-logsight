@@ -1,4 +1,7 @@
 dependencies:
+- name: kafka
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.3.2
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 11.1.12
@@ -20,5 +23,5 @@ dependencies:
 - name: logsight-result-api
   repository: file://./charts/logsight-result-api
   version: 0.1.1
-digest: sha256:e302782d9e2fdaf76fdb2f7cce881eb0af54b8445f1d61a1b8d796d808a11550
-generated: "2022-06-20T11:34:06.029708+02:00"
+digest: sha256:bc692ae85084c19bab563b14926ca7fb057a698306850122c4b121a2ef8f48d5
+generated: "2022-06-22T09:53:38.042186+02:00"

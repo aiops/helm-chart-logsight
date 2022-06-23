@@ -25,7 +25,7 @@ docker run --name elastic-helm-charts-certs --env DNS_NAME -i -w /app \
 docker cp elastic-helm-charts-certs:/app/elastic-certificates.p12 ./ && \
 docker rm -f elastic-helm-charts-certs && \
 openssl pkcs12 -nodes -passin pass:'' -in elastic-certificates.p12 -out elastic-certificate.pem && \
-kubectl -n $NAMESPACE create secret generic elastic-certificates --from-file=elastic-certificates.p12 && \
-kubectl -n $NAMESPACE create secret generic elastic-certificate-pem --from-file=elastic-certificate.pem && \
-kubectl -n $NAMESPACE create secret generic elastic-credentials  --from-literal=password=$password --from-literal=username=$ELASTIC_USERNAME  &&
+kubectl create secret generic elastic-certificates --from-file=elastic-certificates.p12 && \
+kubectl create secret generic elastic-certificate-pem --from-file=elastic-certificate.pem && \
+kubectl create secret generic elastic-credentials  --from-literal=password=elasticsearchpassword --from-literal=username=elastic  &&
 rm -f elastic-certificates.p12 elastic-certificate.pem elastic-stack-ca.p12

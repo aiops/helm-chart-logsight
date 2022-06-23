@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: logsight/logsight
-  pullPolicy: IfNotPresent
+  repository: petar/logsight-core
+  pullPolicy: Never
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v1.2.0"
 
 
 imagePullSecrets: []
@@ -65,7 +65,7 @@ ingress:
 
 extraEnvs:
   - name: DEBUG
-    value: false
+    value: true
   - name: PIPELINE_INDEX_EXT
     value: pipeline
   - name: RETRY_ATTEMPTS
@@ -88,7 +88,10 @@ extraEnvs:
     value: 3600
   - name: FILTER_NORMAL
     value: true
-
+  - name: KAFKA_HOST
+    value: kafka
+  - name: KAFKA_PORT
+    value: 9092
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
