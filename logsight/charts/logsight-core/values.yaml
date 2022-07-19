@@ -87,7 +87,7 @@ extraEnvs:
   - name: ES_CLEANUP_JOB_INTERVAL
     value: 3600
   - name: FILTER_NORMAL
-    value: false
+    value: ""
   - name: KAFKA_HOST
     value: kafka
   - name: KAFKA_PORT
