@@ -65,7 +65,7 @@ ingress:
 
 extraEnvs:
   - name: DEBUG
-    value: false
+    value: true
   - name: PIPELINE_INDEX_EXT
     value: pipeline
   - name: RETRY_ATTEMPTS
@@ -73,7 +73,7 @@ extraEnvs:
   - name: RETRY_TIMEOUT
     value: 10
   - name: INCIDENT_JOBS
-    value: false
+    value: true
   - name: DELETE_ES_JOB
     value: false
   - name: PARALLEL_JOBS
@@ -87,13 +87,13 @@ extraEnvs:
   - name: ES_CLEANUP_JOB_INTERVAL
     value: 3600
   - name: FILTER_NORMAL
-    value: false
+    value: ""
   - name: KAFKA_HOST
     value: kafka
   - name: KAFKA_PORT
     value: 9092
   - name: RUN_PIPELINE
-    value: true
+    value: false
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

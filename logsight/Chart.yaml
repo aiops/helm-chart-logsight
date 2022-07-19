@@ -44,3 +44,6 @@ dependencies:
 - name: logsight-result-api
   version: 0.1.1
   repository: file://./charts/logsight-result-api
+- name: logsight-scheduled-jobs
+  version: 0.1.1
+  repository: file://./charts/logsight-jobs

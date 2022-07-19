@@ -9,8 +9,8 @@ This chart bootstraps an instance of the latest Logsight version with PostgreSQL
 ## Compatibility
 
 | Logsight Version | Kubernetes Version | Helm Chart Version  | Elasticsearch Version | Kibana Version|
-| ---------------- | ------------------ | ------------------ | ------------------ | ------------------ |
-| v1.0.0           | 1.23               | 3.0                | 7.16.2 | 7.16.2|
+|------------------| ------------------ | ------------------ | ------------------ | ------------------ |
+| v1.2.0           | 1.23               | 3.0                | 7.16.2 | 7.16.2|
 
 ## Installing the chart
 
@@ -116,3 +116,11 @@ This helm chart uses Postgres database for storage. Below are the configurable p
 
 For more information about additional elasticsarch parameter please refer to the [readme](https://github.com/elastic/helm-charts/tree/main/elasticsearch) of the official helm chart.
 
+### Kafka
+
+ Below are the configurable params for kafka. Kafka is setup only when `kafka.enabeled: true` For more information about configurable parameters pleaser refer to the [README](https://github.com/bitnami/charts/tree/master/bitnami/kafka) of the chart.
+
+| Parameter                         | Description  | Default    |
+|-----------------------------------|--------------|------------|
+| `kafka.enabled`                   | Enable kafka. | `true`    |
+| `kafka.maxMessageBytes`           | The largest record batch size allowed by Kafka             | `_5242880` |

@@ -23,5 +23,8 @@ dependencies:
 - name: logsight-result-api
   repository: file://./charts/logsight-result-api
   version: 0.1.1
-digest: sha256:bc692ae85084c19bab563b14926ca7fb057a698306850122c4b121a2ef8f48d5
-generated: "2022-06-22T09:53:38.042186+02:00"
+- name: logsight-scheduled-jobs
+  repository: file://./charts/logsight-jobs
+  version: 0.1.1
+digest: sha256:caea4fad9f512bc6ae2d90a73619e1613de464a49467fad32cb92037d94d9628
+generated: "2022-07-19T12:14:23.441898+02:00"
