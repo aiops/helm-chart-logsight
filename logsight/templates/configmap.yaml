@@ -6,9 +6,15 @@ data:
   POSTGRES_HOSTNAME: postgresql
   POSTGRES_DB: {{ .Values.global.postgresql.auth.database | quote }}
   POSTGRES_PORT: {{ .Values.global.postgresql.service.port | quote }}
-  ELASTICSEARCH_HOST: {{ .Values.logsight.elasticsearch.hostname | quote }}
-  ELASTICSEARCH_PORT: {{ .Values.logsight.elasticsearch.port | quote }}
-  KIBANA_HOST: {{ .Values.logsight.kibana.hostname | quote }}
-  KIBANA_PORT: {{ .Values.logsight.kibana.port | quote }}
+  ELASTICSEARCH_SCHEME: {{ .Values.logsight.connections.elasticsearch.scheme | quote }}
+  ELASTICSEARCH_HOST: {{ .Values.logsight.connections.elasticsearch.host | quote }}
+  ELASTICSEARCH_PORT: {{ .Values.logsight.connections.elasticsearch.port | quote }}
+  KIBANA_HOST: {{ .Values.logsight.connections.kibana.hostname | quote }}
+  KIBANA_PORT: {{ .Values.logsight.connections.kibana.port | quote }}
+  KAFKA_HOST: {{ .Values.logsight.connections.kafka.host | quote }}
+  KAFKA_PORT: {{ .Values.logsight.connections.kafka.port | quote }}
+  KAFKA_TOPIC: {{ .Values.logsight.connections.kafka.topic | quote }}
+  RETRY_ATTEMPTS: {{ .Values.logsight.retryAttempts | quote }}
+  RETRY_TIMEOUT: {{ .Values.logsight.retryTimeout | quote }}
   ACCEPT_LOGSIGHT_LICENSE: accept-license
-  LOG_SINK_CONNECTION: {{ .Values.logsight.backend.connectionType | quote }}
+

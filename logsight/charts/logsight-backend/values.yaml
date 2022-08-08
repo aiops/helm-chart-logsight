@@ -10,6 +10,42 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+
+logsight:
+  backend:
+    deployment: stand-alone
+    url: http://localhost:4200
+    email: support@logsight.ai
+    logStreamZMQPort: 5559
+    logSinkConnection: zmq
+
+  connections:
+    postgres:
+      host: postgres
+      port: 5432
+      db: logsight
+      username: logsight
+    elasticsearch:
+      scheme: http
+      host: elasticsearch-master
+      port: 9200
+      username: elastic
+    kibana:
+      hostname: logsight-kibana
+      port: 5601
+    kafka:
+      host: kafka
+      port: 9092
+      topic: pipeline
+    resultApi:
+      scheme: http
+      host: result-api
+      port: 5554
+      comparePath: api/v1/compare
+
+
+
+
 imagePullSecrets: []
 nameOverride: "logsight-backend"
 fullnameOverride: "logsight-backend"
@@ -40,8 +76,6 @@ service:
   type: ClusterIP
   port: 8080
   
-ports:
-  zmqLogStream: 5559
 
 ingress:
   enabled: false
@@ -59,9 +93,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-logsight:
-  backend:
-    connectionType: kafka
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

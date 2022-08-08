@@ -3,17 +3,16 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}-config
 data:
-  RESULT_API_HOST: logsight-result-api
-  RESULT_API_PORT: "5554"
-  KIBANA_SCHEME: http
-  LOGSIGHT_DEPLOYMENT_BACKEND: stand-alone
-  LOGSIGHT_BACKEND_PORT: "8080"
-  APP_RPC_ZMQ_HOST: logsight
-  APP_RPC_ZMQ_PORT: "5555"
-  APP_RPC_ZMQ_TIMEOUT: "30000"
-  LOGS_STREAM_ZMQ_PORT: "5559"
-  LOGS_CTRL_RPC_IN_ZMQ_PORT: "5558"
-  LOGS_CTRL_RPC_OUT_ZMQ_PORT: "5557"
-  LOG_SINK_CONNECTION: {{ .Values.logsight.backend.connectionType | quote }}
-  KAFKA_SERVER: "kafka:9092"
-  KAFKA_TOPIC: "pipeline"
+  LOGSIGHT_DEPLOYMENT: {{ .Values.logsight.backend.deployment | quote}}
+  LOGSIGHT_URL: {{ .Values.logsight.backend.url | quote}}
+  LOGSIGHT_EMAIL: {{ .Values.logsight.backend.email | quote}}
+  LOGS_STREAM_ZMQ_PORT: {{ .Values.logsight.backend.logStreamZMQPort | quote}}
+  KAFKA_SERVER:  {{ printf "%s:%v" .Values.logsight.connections.kafka.host .Values.logsight.connections.kafka.port | quote }}
+  KAFKA_TOPIC: {{ .Values.logsight.connections.kafka.topic | quote}}
+  LOG_SINK_CONNECTION: {{ .Values.logsight.backend.logSinkConnection | quote}}
+  RESULT_API_SCHEME: {{ .Values.logsight.connections.resultApi.scheme | quote}}
+  RESULT_API_HOST: {{ .Values.logsight.connections.resultApi.host | quote}}
+  RESULT_API_PORT: {{ .Values.logsight.connections.resultApi.port | quote}}
+  RESULT_API_COMPARE_PATH: {{ .Values.logsight.connections.resultApi.comparePath | quote}}
+  SPRING_DATASOURCE_URL: {{ printf "jdbc:postgresql://%s:%v/%s" .Values.logsight.connections.postgres.host .Values.logsight.connections.postgres.port .Values.logsight.connections.postgres.db | quote }}
+  SPRING_DATASOURCE_USERNAME: {{ .Values.logsight.connections.postgres.username | quote }}

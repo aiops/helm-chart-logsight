@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Chart.Name }}-config
-data:
-  LOGS_STREAM_ZMQ_ENDPOINT: {{ printf "tcp://%s:%v" .Values.backendHostname .Values.ports.zmqLogStream | quote }}
-  FILTER_NORMAL: {{ .Values.filterNormal | quote}}

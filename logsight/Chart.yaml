@@ -4,8 +4,8 @@ name: logsight
 description: Logsight infuses deep learning and AI-powered analytics to enable continuous software delivery and proactive troubleshooting.
 type: application
 
-version: 0.1.1
-appVersion: "v1.2.1"
+version: 0.1.2
+appVersion: v1.3.1-pre
 keywords:
   - logs
   - analytics
@@ -33,17 +33,17 @@ dependencies:
   version: 7.16.2
   repository: https://helm.elastic.co
 - name: logsight-backend
-  version: 0.1.1
+  version: 0.1.2
   repository: file://./charts/logsight-backend
-- name: logsight
-  version: 0.1.1
-  repository: file://./charts/logsight-core
+- name: logsight-pipeline
+  version: 0.1.2
+  repository: file://./charts/logsight-pipeline
 - name: logsight-frontend
-  version: 0.1.1
+  version: 0.1.2
   repository: file://./charts/logsight-frontend
 - name: logsight-result-api
-  version: 0.1.1
+  version: 0.1.2
   repository: file://./charts/logsight-result-api
-- name: logsight-scheduled-jobs
-  version: 0.1.1
+- name: logsight-jobs
+  version: 0.1.2
   repository: file://./charts/logsight-jobs

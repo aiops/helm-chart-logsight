@@ -23,7 +23,27 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-verificationThreshold: 80
+
+logsight:
+  result_api:
+    verificationThreshold: 80
+
+  retry_attempts: 5
+  retry_timeout : 10
+
+  connections:
+    postgres:
+      host: postgres
+      port: 5432
+      db: logsight
+      username: logsight
+    elasticsearch:
+      scheme: http
+      host: elasticsearch-master
+      port: 9200
+      username: elastic
+
+
 
 podAnnotations: {}
 

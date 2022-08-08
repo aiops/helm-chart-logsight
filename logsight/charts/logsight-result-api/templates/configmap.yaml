@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}-config
 data:
-  VERIFICATION_RISK_THRESHOLD: {{ .Values.verificationThreshold | quote}}
+  VERIFICATION_RISK_THRESHOLD: {{ .Values.logsight.result_api.verificationThreshold | quote}}

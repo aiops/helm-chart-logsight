@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-config
+data:
+  LOGS_STREAM_ZMQ_ENDPOINT: {{ printf "tcp://%s:%v" .Values.logsight.connections.zeromq.host .Values.logsight.connections.zeromq.port | quote }}
+  FILTER_NORMAL: {{ .Values.logsight.pipeline.filter_normal | quote}}
+  PIPELINE_CONNECTION: {{ .Values.logsight.pipeline.pipeline_connection | quote}}
+  INGEST_PIPELINE: {{ .Values.logsight.connections.elasticsearch.ingest_pipeline | quote}}

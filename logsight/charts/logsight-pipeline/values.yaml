@@ -5,15 +5,15 @@
 replicaCount: 1
 
 image:
-  repository: logsight/logsight
+  repository: logsight/logsight-pipeline
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 
 imagePullSecrets: []
-nameOverride: "logsight"
-fullnameOverride: "logsight"
+nameOverride: "logsight-pipeline"
+fullnameOverride: "logsight-pipeline"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -37,15 +37,35 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-backendHostname: logsight-backend
 service:
   type: ClusterIP
   port: 5559
 
-ports:
-  zmqLogStream: 5559
 
-filterNormal: false
+logsight:
+  pipeline:
+    filter_normal: false
+    pipeline_connection: zeromq
+
+  retry_attempts: 5
+  retry_timeout : 10
+
+  connections:
+    postgres:
+      host: postgres
+      port: 5432
+      db: logsight
+      username: logsight
+    elasticsearch:
+      scheme: http
+      host: elasticsearch
+      port: 9200
+      username: elastic
+      ingest_pipeline: ingest_timestamp
+    zeromq:
+      host: logsight-backend
+      port: 5559
+
 
 ingress:
   enabled: false
@@ -63,37 +83,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-extraEnvs:
-  - name: DEBUG
-    value: false
-  - name: PIPELINE_INDEX_EXT
-    value: pipeline
-  - name: RETRY_ATTEMPTS
-    value: 6
-  - name: RETRY_TIMEOUT
-    value: 10
-  - name: INCIDENT_JOBS
-    value: false
-  - name: DELETE_ES_JOB
-    value: false
-  - name: PARALLEL_JOBS
-    value: 2
-  - name: JOB_INTERVAL
-    value: 60
-  - name: ES_PIPELINE_ID_INGEST_TIMESTAMP
-    value: ingest_timestamp
-  - name: ES_CLEANUP_AGE
-    value: now-1y
-  - name: ES_CLEANUP_JOB_INTERVAL
-    value: 3600
-  - name: FILTER_NORMAL
-    value: false
-  - name: KAFKA_HOST
-    value: kafka
-  - name: KAFKA_PORT
-    value: 9092
-  - name: RUN_PIPELINE
-    value: true
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

@@ -1,14 +1,39 @@
 logsight:
-  elasticsearch:
-    username: elastic
-    password: elasticsearchpassword
-    hostname: elasticsearch-master
-    port: 9200
-  kibana:
-    hostname: logsight-kibana
-    port: 5601
-  backend:
-    connectionType: kafka
+
+  logsight_pipeline:
+    filter_normal: false
+    pipeline_connection: zeromq
+
+  logsight_jobs:
+    incident_job:
+      interval: 60
+      n_jobs: 2
+    es_cleanup_job:
+      interval: 3600
+      cleanup_age: now-1y
+  retryAttempts: 5
+  retryTimeout : 10
+  connections:
+    postgres:
+      host: postgres
+      port: 5432
+      db: logsight
+      username: logsight
+    elasticsearch:
+      scheme: http
+      host: elasticsearch-master
+      port: 9200
+      username: elastic
+    zeromq:
+      host: logsight-backend
+      port: 5559
+    kibana:
+      hostname: logsight-kibana
+      port: 5601
+    kafka:
+      host: kafka
+      port: 9092
+      topic: pipeline
 
 ## Configuration values for postgresql dependency
 ## ref: https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md
@@ -36,9 +61,9 @@ kafka:
 global:
   postgresql:
     auth:
-      username: logsight-test
-      password: logsight-test
-      database: test-logsight
+      username: logsight
+      password: logsight
+      database: logsight
     service:
       port: 5432
 

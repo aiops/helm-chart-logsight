@@ -13,18 +13,18 @@ dependencies:
   version: 7.16.2
 - name: logsight-backend
   repository: file://./charts/logsight-backend
-  version: 0.1.1
-- name: logsight
-  repository: file://./charts/logsight-core
-  version: 0.1.1
+  version: 0.1.2
+- name: logsight-pipeline
+  repository: file://./charts/logsight-pipeline
+  version: 0.1.2
 - name: logsight-frontend
   repository: file://./charts/logsight-frontend
-  version: 0.1.1
+  version: 0.1.2
 - name: logsight-result-api
   repository: file://./charts/logsight-result-api
-  version: 0.1.1
-- name: logsight-scheduled-jobs
+  version: 0.1.2
+- name: logsight-jobs
   repository: file://./charts/logsight-jobs
-  version: 0.1.1
-digest: sha256:caea4fad9f512bc6ae2d90a73619e1613de464a49467fad32cb92037d94d9628
-generated: "2022-07-19T12:14:23.441898+02:00"
+  version: 0.1.2
+digest: sha256:4645510902dae1e75bf818c5da01435e50c52ff7ee0ca549492c16fd60cca313
+generated: "2022-08-05T15:01:41.184785+02:00"

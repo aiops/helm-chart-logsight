@@ -1,10 +1,10 @@
 apiVersion: v2
-name: logsight
+name: logsight-jobs
 description: Logsight infuses deep learning and AI-powered analytics to enable continuous software delivery and proactive troubleshooting.
 type: application
 
-version: 0.1.1
-appVersion: "v1.2.2-pre"
+version: 0.1.2
+appVersion: "v1.3.1-pre"
 keywords:
   - logs
   - analytics

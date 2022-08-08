@@ -5,15 +5,40 @@
 replicaCount: 1
 
 image:
-  repository: logsight/logsight
+  repository: logsight/logsight-jobs
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
 
 
 imagePullSecrets: []
-nameOverride: "logsight"
-fullnameOverride: "logsight"
+nameOverride: "logsight-jobs"
+fullnameOverride: "logsight-jobs"
+
+logsight:
+  logsight_jobs:
+    incident_job:
+      interval: 60
+      n_jobs: 2
+    es_cleanup_job:
+      interval: 3600
+      cleanup_age: now-1y
+
+  retry_attempts: 5
+  retry_timeout : 10
+
+  connections:
+    postgres:
+      host: postgres
+      port: 5432
+      db: logsight
+      username: logsight
+    elasticsearch:
+      scheme: http
+      host: elasticsearch-master
+      port: 9200
+      username: elastic
+
+
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -23,6 +48,10 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+
+
+
+
 
 podAnnotations: {}
 
@@ -37,15 +66,9 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-backendHostname: logsight-backend
 service:
   type: ClusterIP
   port: 5559
-
-ports:
-  zmqLogStream: 5559
-
-filterNormal: false
 
 ingress:
   enabled: false
@@ -63,37 +86,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-extraEnvs:
-  - name: DEBUG
-    value: true
-  - name: PIPELINE_INDEX_EXT
-    value: pipeline
-  - name: RETRY_ATTEMPTS
-    value: 6
-  - name: RETRY_TIMEOUT
-    value: 10
-  - name: INCIDENT_JOBS
-    value: true
-  - name: DELETE_ES_JOB
-    value: false
-  - name: PARALLEL_JOBS
-    value: 2
-  - name: JOB_INTERVAL
-    value: 60
-  - name: ES_PIPELINE_ID_INGEST_TIMESTAMP
-    value: ingest_timestamp
-  - name: ES_CLEANUP_AGE
-    value: now-1y
-  - name: ES_CLEANUP_JOB_INTERVAL
-    value: 3600
-  - name: FILTER_NORMAL
-    value: ""
-  - name: KAFKA_HOST
-    value: kafka
-  - name: KAFKA_PORT
-    value: 9092
-  - name: RUN_PIPELINE
-    value: false
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

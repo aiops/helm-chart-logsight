@@ -1,0 +1,52 @@
+
+sudo apt-get update &&  sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+ echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update &&  sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker 
+
+# install minicube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# install kubectl
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update && sudo apt-get install -y kubectl
+
+
+# install helm
+curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+sudo apt-get install apt-transport-https --yes
+echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm
+
+minikube start --cpus 6
+
+kubectl create secret generic elastic-certificates --from-file=elastic-certificates.p12 && kubectl create secret generic elastic-certificate-pem --from-file=elastic-certificate.pem && kubectl create secret generic elastic-certificate-crt --from-file=elastic-certificate.crt
+kubectl -n default create secret generic elastic-credentials  --from-literal=password=elasticsearchpassword --from-literal=username=elastic
+kubectl create secret generic kibana --from-literal=encryptionkey=wjIUNXzA2GuBKjpUdUW6ohcqECLIRteD4fs5M7vUeQYJoboVFL
+
+helm repo add elastic https://helm.elastic.co
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+
+helm install elasticsearch --version 7.16.2 elastic/elasticsearch -f ./services/elasticsearch_values.yaml
+helm install kibana --version 7.16.2 elastic/kibana -f ./services/kibana_values.yaml
+helm install postgres bitnami/postgresql -f ./services/postgresql_values.yaml
+
+helm install logsight ./logsight
+helm install logsight-backend ./logsight-backend
+helm install logsight-frontend ./logsight-frontend

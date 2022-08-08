@@ -3,5 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}-config
 data:
-  LOGS_STREAM_ZMQ_ENDPOINT: {{ printf "tcp://%s:%v" .Values.backendHostname .Values.ports.zmqLogStream | quote }}
-  FILTER_NORMAL: {{ .Values.filterNormal | quote}}
+     INCIDENT_JOB_INTERVAL : {{ .Values.logsight.logsight_jobs.incident_job.interval | quote }}
+     INCIDENT_JOB_PARALLEL_JOBS: {{ .Values.logsight.logsight_jobs.incident_job.n_jobs | quote }}
+     ES_CLEANUP_JOB_INTERVAL: {{ .Values.logsight.logsight_jobs.es_cleanup_job.interval | quote }}
+     ES_CLEANUP_AGE: {{ .Values.logsight.logsight_jobs.es_cleanup_job.cleanup_age | quote }}

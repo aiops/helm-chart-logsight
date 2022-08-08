@@ -1,4 +1,4 @@
-{{/*
+gi{{/*
 Expand the name of the chart.
 */}}
 {{- define "logsight.name" -}}
