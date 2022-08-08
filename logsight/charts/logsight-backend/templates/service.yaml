@@ -11,8 +11,8 @@ spec:
       targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: api-entrypoint
-    - port: {{ .Values.ports.zmqLogStream }}
-      targetPort: {{ .Values.ports.zmqLogStream }}
+    - port: {{ .Values.logsight.backend.logStreamZMQPort }}
+      targetPort: {{ .Values.logsight.backend.logStreamZMQPort }}
       protocol: TCP
       name: log-steam
   selector:
