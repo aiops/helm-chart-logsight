@@ -4,7 +4,7 @@ description: Logsight infuses deep learning and AI-powered analytics to enable c
 type: application
 
 version: 0.1.2
-appVersion: "v1.3.1-pre"
+appVersion: "LP-v1.3.1-pre"
 keywords:
   - logs
   - analytics
