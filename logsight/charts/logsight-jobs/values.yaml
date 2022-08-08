@@ -28,7 +28,7 @@ logsight:
 
   connections:
     postgres:
-      host: postgres
+      host: postgresql
       port: 5432
       db: logsight
       username: logsight
