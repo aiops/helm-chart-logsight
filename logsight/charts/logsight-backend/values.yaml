@@ -39,7 +39,7 @@ logsight:
       topic: pipeline
     resultApi:
       scheme: http
-      host: result-api
+      host: logsight-result-api
       port: 5554
       comparePath: api/v1/compare
 
