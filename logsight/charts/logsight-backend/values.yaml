@@ -48,7 +48,6 @@ logsight:
 imagePullSecrets: []
 nameOverride: "logsight-backend"
 fullnameOverride: "logsight-backend"
-enableServiceLinks: false
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
